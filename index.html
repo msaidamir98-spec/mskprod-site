@@ -7,18 +7,17 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🩺</text></svg>">
 <meta name="description" content="Каждый ответ — из данных вашей клиники. Всё неясное или медицинское — человеку. Ответы 24/7 пока администратор спит.">
 <style>
+.h4style { font-size: 15px; line-height: 1.4; margin: 0 0 5px; }
 /* ===================================================================
    НОЧНОЙ ДЕЖУРНЫЙ — дизайн-система Mskprod
-   Палитра: ночь #0d1220 → #131a2e, бирюза #26d0ce → #1a9fd8
-   Текст: белый, мутный #a0b4c0
+   Палитра: ночь #0d1220 → #131a2e, один акцент — бирюза #26d0ce
+   Текст: белый, мутный #7a96a8
    =================================================================== */
 :root {
   --night:     #0d1220;
   --night-2:   #131a2e;
   --night-3:   #1a2540;
   --teal:      #26d0ce;
-  --teal-d:    #1a9fd8;
-  --teal-glow: rgba(38,208,206,.18);
   --teal-soft: rgba(38,208,206,.10);
   --white:     #ffffff;
   --text:      #dce8f0;
@@ -32,8 +31,8 @@
   --green:     #22c55e;
   --amber:     #f59e0b;
   --r-xl: 24px; --r-lg: 18px; --r-md: 14px; --r-sm: 10px;
-  --sh: 0 2px 16px rgba(13,18,32,.6);
-  --sh-lg: 0 16px 48px rgba(13,18,32,.8), 0 4px 12px rgba(38,208,206,.08);
+  --sh: 0 2px 12px rgba(13,18,32,.5);
+  --sh-lg: 0 12px 40px rgba(13,18,32,.7);
   --ease: cubic-bezier(.22,.61,.36,1);
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
@@ -46,59 +45,68 @@ body {
   font-family: var(--font);
   background: var(--night);
   color: var(--text);
-  line-height: 1.55;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  background-image:
-    radial-gradient(ellipse 900px 600px at 80% -10%, rgba(38,208,206,.07), transparent 70%),
-    radial-gradient(ellipse 600px 400px at -10% 20%, rgba(26,159,216,.05), transparent 60%);
+}
+
+/* Reduced motion — отключить все анимации и переходы */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-up { opacity: 1 !important; transform: none !important; }
 }
 
 /* ——— Layout ——— */
-.page { max-width: 760px; margin: 0 auto; padding: 0 20px; }
-.section { padding: 72px 0; border-top: 1px solid var(--border-2); }
+.page { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 96px 0; border-top: 1px solid var(--border-2); }
 .section:first-child { border-top: none; }
 
 /* ——— Animations ——— */
 .fade-up {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity .6s var(--ease), transform .6s var(--ease);
+  transform: translateY(12px);
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
 }
 .fade-up.visible { opacity: 1; transform: none; }
 
 /* ——— Typography ——— */
 .eyebrow {
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.8px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
   color: var(--teal);
-  margin: 0 0 14px;
+  margin: 0 0 18px;
 }
 h1 {
-  font-size: clamp(28px, 7vw, 46px);
-  font-weight: 800;
-  line-height: 1.06;
-  letter-spacing: -1.2px;
-  margin: 0 0 16px;
+  font-size: clamp(32px, 8vw, 54px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  margin: 0 0 22px;
   color: var(--white);
 }
 h2 {
-  font-size: clamp(20px, 4.5vw, 28px);
+  font-size: clamp(22px, 5vw, 32px);
   font-weight: 700;
-  letter-spacing: -.6px;
-  margin: 0 0 10px;
+  letter-spacing: -.7px;
+  line-height: 1.2;
+  margin: 0 0 14px;
   color: var(--white);
 }
 h3 {
-  font-size: 17px;
-  font-weight: 700;
-  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px;
   color: var(--white);
 }
-p { margin: 0 0 12px; color: var(--text); }
-.lead { font-size: 17px; line-height: 1.6; color: var(--text); }
+p { margin: 0 0 14px; color: var(--text); }
+.lead { font-size: 18px; line-height: 1.7; color: var(--text); }
 .accent { color: var(--teal); }
 
 /* ——— Brand bar ——— */
@@ -106,8 +114,8 @@ p { margin: 0 0 12px; color: var(--text); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 0 0;
-  margin-bottom: 56px;
+  padding: 28px 0 0;
+  margin-bottom: 72px;
 }
 .logo {
   font-weight: 800;
@@ -134,67 +142,63 @@ p { margin: 0 0 12px; color: var(--text); }
 
 /* ——— Hero ——— */
 .hero-sub {
-  font-size: 17px;
+  font-size: 18px;
   color: var(--text);
-  line-height: 1.6;
-  max-width: 520px;
-  margin: 0 0 32px;
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 0 0 40px;
 }
 .hero-cta-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 48px;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 64px;
 }
+/* Единственная primary-кнопка */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, var(--teal), var(--teal-d));
+  background: var(--teal);
   color: var(--night);
   font-weight: 700;
   font-size: 15px;
   border: none;
   border-radius: var(--r-md);
-  padding: 14px 24px;
+  padding: 15px 26px;
   cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 4px 20px rgba(38,208,206,.3), 0 1px 4px rgba(0,0,0,.3);
-  transition: transform .15s var(--ease), box-shadow .2s;
+  min-height: 48px;
+  box-shadow: 0 2px 12px rgba(38,208,206,.22);
+  transition: opacity .2s;
 }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(38,208,206,.4); }
-.btn-primary:active { transform: none; }
-.btn-outline {
+.btn-primary:hover { opacity: .88; }
+.btn-primary:active { opacity: .75; }
+/* Вторичное действие — текстовая ссылка */
+.btn-text-link {
+  color: var(--muted);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color .2s;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: transparent;
-  color: var(--teal);
-  font-weight: 600;
-  font-size: 15px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--r-md);
-  padding: 13px 22px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: border-color .2s, background .2s;
 }
-.btn-outline:hover { border-color: var(--teal); background: var(--teal-soft); }
+.btn-text-link:hover { color: var(--teal); }
 
 /* time chip */
 .timemark {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: transparent;
+  border: 1px solid var(--border-2);
   border-radius: 999px;
   padding: 7px 14px;
   font-size: 12px;
   color: var(--muted);
-  margin-bottom: 24px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  margin-bottom: 28px;
 }
 .timemark .dot-live {
   width: 7px; height: 7px; border-radius: 50%;
@@ -203,8 +207,8 @@ p { margin: 0 0 12px; color: var(--text); }
   animation: live-pulse 2s infinite;
 }
 @keyframes live-pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(38,208,206,.5); }
-  70%  { box-shadow: 0 0 0 8px rgba(38,208,206,.0); }
+  0%   { box-shadow: 0 0 0 0 rgba(38,208,206,.4); }
+  70%  { box-shadow: 0 0 0 6px rgba(38,208,206,.0); }
   100% { box-shadow: 0 0 0 0 rgba(38,208,206,.0); }
 }
 
@@ -212,21 +216,19 @@ p { margin: 0 0 12px; color: var(--text); }
 .chips-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 32px;
+  gap: 14px;
+  margin-top: 48px;
 }
 @media (max-width: 520px) { .chips-grid { grid-template-columns: 1fr; } }
 .chip {
   background: var(--surface);
   border: 1px solid var(--border-2);
   border-radius: var(--r-md);
-  padding: 16px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  padding: 18px;
 }
-.chip .chip-icon { font-size: 22px; margin-bottom: 8px; line-height: 1; }
-.chip h4 { font-size: 13px; font-weight: 700; color: var(--white); margin: 0 0 4px; }
-.chip p  { font-size: 12px; color: var(--muted); margin: 0; line-height: 1.4; }
+.chip .chip-icon { font-size: 22px; margin-bottom: 10px; line-height: 1; }
+.chip .chip-t, .chip .h4style { font-size: 13px; font-weight: 600; color: var(--white); margin: 0 0 5px; }
+.chip p  { font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5; }
 
 /* ======================================================
    ДЕМО-ЧАТ
@@ -241,7 +243,7 @@ p { margin: 0 0 12px; color: var(--text); }
   margin: 32px auto 0;
 }
 .demo-header {
-  background: linear-gradient(180deg, var(--night-3), var(--night-2));
+  background: var(--night-2);
   padding: 14px 18px;
   display: flex;
   align-items: center;
@@ -251,10 +253,9 @@ p { margin: 0 0 12px; color: var(--text); }
 .demo-avatar {
   width: 40px; height: 40px; flex: none;
   border-radius: 50%;
-  background: linear-gradient(150deg, var(--teal), var(--teal-d));
+  background: var(--teal);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 16px; color: var(--night);
-  box-shadow: 0 0 12px rgba(38,208,206,.35);
+  font-weight: 700; font-size: 16px; color: var(--night);
 }
 .demo-name  { font-size: 14px; font-weight: 700; color: var(--white); line-height: 1.2; }
 .demo-status { font-size: 11px; color: var(--teal); display: flex; align-items: center; gap: 5px; margin-top: 2px; }
@@ -279,8 +280,7 @@ p { margin: 0 0 12px; color: var(--text); }
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background:
-    radial-gradient(ellipse 200px 200px at 50% 110%, rgba(38,208,206,.04), transparent);
+  background: transparent;
 }
 .chat-area::-webkit-scrollbar { width: 4px; }
 .chat-area::-webkit-scrollbar-track { background: transparent; }
@@ -292,10 +292,10 @@ p { margin: 0 0 12px; color: var(--text); }
   padding: 10px 13px;
   border-radius: 18px;
   font-size: 13.5px;
-  line-height: 1.5;
+  line-height: 1.55;
   opacity: 0;
-  transform: translateY(8px) scale(.98);
-  animation: msg-in .3s var(--ease) forwards;
+  transform: translateY(6px);
+  animation: msg-in .25s var(--ease) forwards;
 }
 .msg-bot {
   align-self: flex-start;
@@ -306,7 +306,7 @@ p { margin: 0 0 12px; color: var(--text); }
 }
 .msg-user {
   align-self: flex-end;
-  background: linear-gradient(135deg, var(--teal), var(--teal-d));
+  background: var(--teal);
   color: var(--night);
   font-weight: 500;
   border-bottom-right-radius: 5px;
@@ -388,6 +388,8 @@ p { margin: 0 0 12px; color: var(--text); }
   white-space: nowrap;
 }
 .chip-btn:hover { background: var(--teal-soft); border-color: var(--teal); }
+.chip-btn { min-height: 44px; }
+footer a, .final-cta a[href^="tel"], .cta-contact a { display: inline-block; padding: 15px 6px; }
 .chip-btn:disabled { opacity: .35; cursor: default; }
 
 .demo-input-row {
@@ -411,17 +413,17 @@ p { margin: 0 0 12px; color: var(--text); }
 .demo-input::placeholder { color: var(--faint); }
 .demo-input:focus { border-color: var(--teal); }
 .demo-send {
-  background: linear-gradient(135deg, var(--teal), var(--teal-d));
+  background: var(--teal);
   border: none;
   border-radius: 50%;
-  width: 38px; height: 38px; flex: none;
+  width: 44px; height: 44px; flex: none;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   color: var(--night);
   font-size: 16px;
-  transition: transform .15s;
+  transition: opacity .15s;
 }
-.demo-send:hover { transform: scale(1.08); }
+.demo-send:hover { opacity: .85; }
 
 .demo-disclaimer {
   padding: 10px 14px;
@@ -439,23 +441,23 @@ p { margin: 0 0 12px; color: var(--text); }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  margin-top: 32px;
+  margin-top: 40px;
 }
 @media (max-width: 520px) { .pain-grid { grid-template-columns: 1fr; } }
 .pain-card {
   background: var(--surface);
   border: 1px solid var(--border-2);
   border-radius: var(--r-lg);
-  padding: 18px;
+  padding: 20px;
   position: relative;
   overflow: hidden;
 }
 .pain-card::before {
   content: "";
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
 }
-.pain-card.bad::before  { background: linear-gradient(90deg, var(--red), #f08); }
-.pain-card.good::before { background: linear-gradient(90deg, var(--teal), var(--teal-d)); }
+.pain-card.bad::before  { background: var(--red); }
+.pain-card.good::before { background: var(--teal); }
 .pain-label {
   font-size: 10px;
   font-weight: 800;
@@ -480,7 +482,7 @@ p { margin: 0 0 12px; color: var(--text); }
 
 /* ——— Pain list ——— */
 .pain-list {
-  margin: 32px 0 0;
+  margin: 40px 0 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -501,7 +503,7 @@ p { margin: 0 0 12px; color: var(--text); }
   display: flex; align-items: center; justify-content: center;
   font-size: 18px;
 }
-.pain-item h4 { font-size: 14px; font-weight: 700; color: var(--white); margin: 0 0 4px; }
+.pain-item .h4style { font-size: 14px; font-weight: 700; color: var(--white); margin: 0 0 4px; }
 .pain-item p  { font-size: 13px; color: var(--muted); margin: 0; }
 
 /* ======================================================
@@ -511,7 +513,7 @@ p { margin: 0 0 12px; color: var(--text); }
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin-top: 32px;
+  margin-top: 40px;
   position: relative;
 }
 .steps-list::before {
@@ -520,26 +522,27 @@ p { margin: 0 0 12px; color: var(--text); }
   left: 19px; top: 40px; bottom: 20px;
   width: 1px;
   background: linear-gradient(180deg, var(--teal), rgba(38,208,206,0));
+  opacity: .4;
 }
 .step {
   display: flex;
-  gap: 18px;
+  gap: 20px;
   align-items: flex-start;
-  padding-bottom: 28px;
+  padding-bottom: 32px;
   position: relative;
 }
 .step:last-child { padding-bottom: 0; }
 .step-num {
   width: 40px; height: 40px; flex: none;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--night-3), var(--night-2));
-  border: 1.5px solid var(--border);
+  background: var(--night-2);
+  border: 1px solid var(--border-2);
   display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 14px; color: var(--teal);
+  font-weight: 700; font-size: 14px; color: var(--teal);
   z-index: 1;
   position: relative;
 }
-.step-body h4  { font-size: 15px; font-weight: 700; color: var(--white); margin: 0 0 5px; margin-top: 8px; }
+.step-body .h4style  { font-size: 15px; font-weight: 700; color: var(--white); margin: 0 0 5px; margin-top: 8px; }
 .step-body p   { font-size: 13.5px; color: var(--muted); margin: 0; }
 .step-note {
   display: inline-block;
@@ -557,24 +560,16 @@ p { margin: 0 0 12px; color: var(--text); }
    ====================================================== */
 .trust-card {
   background: var(--surface-2);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-2);
   border-radius: var(--r-xl);
-  padding: 32px;
-  margin-top: 32px;
-  position: relative;
-  overflow: hidden;
+  padding: 36px;
+  margin-top: 40px;
 }
-.trust-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 400px 200px at 100% 0%, rgba(38,208,206,.05), transparent 70%);
-  pointer-events: none;
-}
+.trust-h { font-size: 15px; margin: 0 0 4px; line-height: 1.4; }
 .trust-title {
-  font-size: 18px; font-weight: 700; color: var(--white); margin: 0 0 6px;
+  font-size: 20px; font-weight: 700; color: var(--white); margin: 0 0 8px;
 }
-.trust-sub { font-size: 14px; color: var(--muted); margin: 0 0 24px; }
+.trust-sub { font-size: 14px; color: var(--muted); margin: 0 0 28px; line-height: 1.6; }
 .trust-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -583,7 +578,7 @@ p { margin: 0 0 12px; color: var(--text); }
 @media (max-width: 480px) { .trust-grid { grid-template-columns: 1fr; } }
 .trust-row {
   display: flex; gap: 11px; align-items: flex-start;
-  background: rgba(13,18,32,.5);
+  background: rgba(13,18,32,.4);
   border: 1px solid var(--border-2);
   border-radius: var(--r-md);
   padding: 14px;
@@ -591,7 +586,7 @@ p { margin: 0 0 12px; color: var(--text); }
 .trust-row.no  .ti { color: var(--red); }
 .trust-row.yes .ti { color: var(--teal); }
 .ti { font-size: 16px; flex: none; margin-top: 1px; }
-.trust-row h5 { font-size: 12.5px; font-weight: 700; color: var(--white); margin: 0 0 2px; }
+.trust-row .trust-h { font-size: 12.5px; font-weight: 700; color: var(--white); margin: 0 0 2px; }
 .trust-row p  { font-size: 11.5px; color: var(--muted); margin: 0; line-height: 1.4; }
 
 /* ======================================================
@@ -600,30 +595,29 @@ p { margin: 0 0 12px; color: var(--text); }
 .security-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 32px;
+  gap: 14px;
+  margin-top: 40px;
 }
 @media (max-width: 540px) { .security-grid { grid-template-columns: 1fr; } }
 .sec-card {
   background: var(--surface);
   border: 1px solid var(--border-2);
   border-radius: var(--r-lg);
-  padding: 20px;
+  padding: 22px 18px;
   text-align: center;
 }
 .sec-icon { font-size: 26px; margin-bottom: 10px; line-height: 1; }
-.sec-card h4 { font-size: 13px; font-weight: 700; color: var(--white); margin: 0 0 6px; }
+.sec-card .h4style { font-size: 13px; font-weight: 700; color: var(--white); margin: 0 0 6px; }
 .sec-card p  { font-size: 12px; color: var(--muted); margin: 0; line-height: 1.5; }
 
 /* ======================================================
    ВИДЕО
    ====================================================== */
 .video-wrap {
-  margin-top: 32px;
+  margin-top: 40px;
   border-radius: var(--r-xl);
   overflow: hidden;
   border: 1px solid var(--border-2);
-  box-shadow: var(--sh-lg);
   background: var(--night-3);
 }
 .video-wrap video {
@@ -640,7 +634,7 @@ p { margin: 0 0 12px; color: var(--text); }
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 32px;
+  margin-top: 40px;
 }
 .conn-step {
   display: flex;
@@ -649,24 +643,25 @@ p { margin: 0 0 12px; color: var(--text); }
   background: var(--surface);
   border: 1px solid var(--border-2);
   border-radius: var(--r-lg);
-  padding: 16px 18px;
+  padding: 18px 20px;
 }
 .conn-num {
   width: 28px; height: 28px; flex: none;
-  background: linear-gradient(135deg, var(--teal), var(--teal-d));
+  background: var(--teal);
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 12px; color: var(--night);
+  font-weight: 700; font-size: 12px; color: var(--night);
+  min-width: 28px;
 }
-.conn-step h4 { font-size: 14px; font-weight: 700; color: var(--white); margin: 0 0 3px; }
+.conn-step .h4style { font-size: 14px; font-weight: 700; color: var(--white); margin: 0 0 3px; }
 .conn-step p  { font-size: 13px; color: var(--muted); margin: 0; }
 
 .price-block {
-  margin-top: 28px;
-  background: linear-gradient(135deg, rgba(38,208,206,.07), rgba(26,159,216,.05));
-  border: 1px solid var(--border);
+  margin-top: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border-2);
   border-radius: var(--r-xl);
-  padding: 28px;
+  padding: 32px;
 }
 .price-block h3 { margin: 0 0 8px; color: var(--white); }
 .price-block p  { font-size: 14px; color: var(--muted); margin: 0 0 20px; }
@@ -674,7 +669,7 @@ p { margin: 0 0 12px; color: var(--text); }
 /* ======================================================
    FAQ
    ====================================================== */
-.faq-list { margin-top: 32px; }
+.faq-list { margin-top: 40px; }
 details {
   border-bottom: 1px solid var(--border-2);
   padding: 0;
@@ -682,8 +677,8 @@ details {
 details:first-child { border-top: 1px solid var(--border-2); }
 summary {
   list-style: none;
-  padding: 18px 0;
-  font-size: 15px;
+  padding: 20px 0;
+  font-size: 16px;
   font-weight: 600;
   color: var(--white);
   cursor: pointer;
@@ -693,103 +688,100 @@ summary {
   gap: 12px;
   user-select: none;
   -webkit-user-select: none;
+  min-height: 44px;
 }
 summary::-webkit-details-marker { display: none; }
 summary::after {
   content: "+";
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 300;
   color: var(--teal);
   flex: none;
-  transition: transform .25s;
+  transition: transform .2s;
 }
 details[open] summary::after { transform: rotate(45deg); }
 .faq-ans {
-  padding: 0 0 18px;
-  font-size: 14px;
+  padding: 0 0 20px;
+  font-size: 15px;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 /* ======================================================
    ФИНАЛЬНЫЙ CTA
    ====================================================== */
 .final-cta {
-  background: linear-gradient(155deg, var(--night-2), var(--night-3));
-  border: 1px solid var(--border);
+  background: var(--night-2);
+  border: 1px solid var(--border-2);
   border-radius: var(--r-xl);
-  padding: 40px 32px;
+  padding: 56px 40px;
   text-align: center;
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--sh-lg);
-  margin-top: 40px;
+  margin-top: 48px;
 }
-.final-cta::before {
-  content: "";
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 500px 250px at 50% -20%, rgba(38,208,206,.12), transparent 70%);
-  pointer-events: none;
-}
-.final-cta > * { position: relative; }
-.final-cta h2 { margin: 0 0 12px; }
-.final-cta p  { font-size: 15px; color: var(--muted); max-width: 380px; margin: 0 auto 28px; }
+.final-cta h2 { margin: 0 0 16px; }
+.final-cta p  { font-size: 16px; color: var(--muted); max-width: 400px; margin: 0 auto 36px; line-height: 1.7; }
 .cta-btn-row {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   align-items: center;
 }
-.cta-btn-row .btn-primary { font-size: 16px; padding: 16px 32px; }
+.cta-btn-row .btn-primary { font-size: 16px; padding: 16px 34px; min-height: 52px; }
 .contact-row {
-  margin-top: 24px;
+  margin-top: 28px;
   font-size: 14px;
   color: var(--muted);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   align-items: center;
+  line-height: 1.7;
 }
 .contact-row a { color: var(--teal); text-decoration: none; }
 .contact-row a:hover { text-decoration: underline; }
 
 /* ——— Footer ——— */
 footer {
-  padding: 32px 0 40px;
+  padding: 40px 0 48px;
   font-size: 12px;
   color: var(--faint);
   text-align: center;
-  line-height: 1.7;
+  line-height: 1.8;
   border-top: 1px solid var(--border-2);
-  margin-top: 60px;
+  margin-top: 72px;
 }
 footer a { color: var(--muted); text-decoration: none; }
 footer a:hover { color: var(--teal); }
 
 /* ——— Section heading helper ——— */
 .sec-heading {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 .sec-heading + p {
   color: var(--muted);
-  font-size: 15px;
-  max-width: 520px;
+  font-size: 16px;
+  max-width: 540px;
   margin: 0;
+  line-height: 1.7;
 }
 
 /* ——— Responsive tweaks ——— */
+@media (max-width: 480px) {
+  .final-cta { padding: 36px 20px; }
+  .trust-card { padding: 24px 16px; }
+}
 @media (max-width: 360px) {
   .page { padding: 0 14px; }
-  .hero-cta-row { flex-direction: column; }
-  .btn-primary, .btn-outline { width: 100%; justify-content: center; }
-  .final-cta { padding: 28px 20px; }
-  .trust-card { padding: 22px 16px; }
+  .hero-cta-row { flex-direction: column; align-items: flex-start; }
+  .btn-primary { width: 100%; justify-content: center; }
+  .final-cta { padding: 28px 16px; }
+  .trust-card { padding: 20px 14px; }
 }
 </style>
 </head>
 <body>
 
-<div class="page">
+<main class="page">
 
   <!-- ==========================================
        BRAND BAR
@@ -802,7 +794,7 @@ footer a:hover { color: var(--teal); }
   <!-- ==========================================
        HERO — первый экран
        ========================================== -->
-  <section class="section" style="padding-top:0; border-top:none;">
+  <section class="section" style="padding-top: 0; border-top: none;">
     <div class="timemark fade-up">
       <span class="dot-live"></span>
       <span>AI-администратор для частных клиник</span>
@@ -820,24 +812,24 @@ footer a:hover { color: var(--teal); }
     </p>
 
     <div class="hero-cta-row fade-up">
-      <a href="#demo" class="btn-primary" role="button">Проверить на демо-клинике</a>
-      <a href="https://t.me/mskprod_sales_bot" class="btn-outline" target="_blank" rel="noopener" role="button">Получить аудит готовности клиники</a>
+      <a href="#demo" class="btn-primary" role="button">Получить демонстрацию</a>
+      <a href="https://t.me/mskprod_sales_bot" class="btn-text-link" target="_blank" rel="noopener">Написать в Telegram →</a>
     </div>
 
     <div class="chips-grid fade-up">
       <div class="chip">
-        <div class="chip-icon">🕐</div>
-        <h4>Отвечает 24/7</h4>
+        <div class="chip-icon" aria-hidden="true">🕐</div>
+        <div class="h4style chip-t">Отвечает 24/7</div>
         <p>Без выходных и ночного перерыва</p>
       </div>
       <div class="chip">
-        <div class="chip-icon">📂</div>
-        <h4>Только ваши данные</h4>
+        <div class="chip-icon" aria-hidden="true">📂</div>
+        <div class="h4style chip-t">Только ваши данные</div>
         <p>Ответ только из базы клиники — ничего выдуманного</p>
       </div>
       <div class="chip">
-        <div class="chip-icon">🛡</div>
-        <h4>Мед-границы</h4>
+        <div class="chip-icon" aria-hidden="true">🛡</div>
+        <div class="h4style chip-t">Мед-границы</div>
         <p>Симптомы, диагнозы, жалобы — сразу к врачу</p>
       </div>
     </div>
@@ -848,8 +840,8 @@ footer a:hover { color: var(--teal); }
        ========================================== -->
   <section class="section" id="demo">
     <div class="eyebrow">Интерактивное демо</div>
-    <h2 class="sec-heading fade-up">Демо-клиника «Айдент» — попробуйте прямо здесь</h2>
-    <p class="fade-up">Задайте любой вопрос или нажмите готовый сценарий. Все ответы — из синтетической базы демо-клиники. Живая версия работает так же, только с вашими услугами и прайсом.</p>
+    <h2 class="sec-heading fade-up">Попробуйте прямо здесь</h2>
+    <p class="fade-up">Задайте любой вопрос или выберите готовый сценарий. Все ответы — из синтетической базы демо-клиники «Айдент». Живая версия работает так же, но отвечает по вашим услугам и прайсу.</p>
 
     <div class="demo-wrapper fade-up" role="region" aria-label="Интерактивный чат с AI-администратором демо-клиники Айдент">
       <!-- Header -->
@@ -876,11 +868,11 @@ footer a:hover { color: var(--teal); }
 
       <!-- Chips -->
       <div class="demo-chips" id="chipsArea" role="group" aria-label="Готовые вопросы">
-        <button class="chip-btn" onclick="runScenario('clean')" aria-label="Спросить о стоимости чистки">Сколько стоит чистка?</button>
-        <button class="chip-btn" onclick="runScenario('sunday')" aria-label="Спросить о работе в воскресенье">Работаете в воскресенье?</button>
-        <button class="chip-btn" onclick="runScenario('unknown')" aria-label="Спросить о чём-то, чего нет в базе">Делаете МРТ?</button>
-        <button class="chip-btn" onclick="runScenario('medical')" aria-label="Задать медицинский вопрос">Болит зуб, что выпить?</button>
-        <button class="chip-btn" onclick="runScenario('booking')" aria-label="Записаться на приём">Хочу записаться</button>
+        <button class="chip-btn" onclick="runScenario('clean')">Сколько стоит чистка?</button>
+        <button class="chip-btn" onclick="runScenario('sunday')">Работаете в воскресенье?</button>
+        <button class="chip-btn" onclick="runScenario('unknown')">Делаете МРТ?</button>
+        <button class="chip-btn" onclick="runScenario('medical')">Болит зуб, что выпить?</button>
+        <button class="chip-btn" onclick="runScenario('booking')">Хочу записаться</button>
       </div>
 
       <!-- Free input -->
@@ -951,21 +943,21 @@ footer a:hover { color: var(--teal); }
       <div class="pain-item">
         <div class="pain-icon">💤</div>
         <div>
-          <h4>Ночные и праздничные заявки без ответа</h4>
+          <h3 class="h4style">Ночные и праздничные заявки без ответа</h3>
           <p>Заявки приходят и в 23:00, и в воскресенье — администратор в это время не работает. Первичный пациент не готов ждать до утра.</p>
         </div>
       </div>
       <div class="pain-item">
         <div class="pain-icon">📞</div>
         <div>
-          <h4>Администратор занят — заявка висит</h4>
+          <h3 class="h4style">Администратор занят — заявка висит</h3>
           <p>Пока администратор разговаривает по телефону или занят с пациентом, новые сообщения в мессенджере остаются без ответа и теряются.</p>
         </div>
       </div>
       <div class="pain-item">
         <div class="pain-icon">🔄</div>
         <div>
-          <h4>Один и тот же вопрос по двадцать раз в день</h4>
+          <h3 class="h4style">Один и тот же вопрос по двадцать раз в день</h3>
           <p>«Сколько стоит?», «Работаете завтра?», «Как добраться?» — администратор отвечает на одно и то же, вместо того чтобы заниматься пациентами в клинике.</p>
         </div>
       </div>
@@ -984,21 +976,21 @@ footer a:hover { color: var(--teal); }
       <div class="step">
         <div class="step-num" aria-hidden="true">1</div>
         <div class="step-body">
-          <h4>Загружаем ваши услуги, цены и правила</h4>
+          <h3 class="h4style">Загружаем ваши услуги, цены и правила</h3>
           <p>Прайс, часы работы, адрес, FAQ — всё, что сейчас знает ваш администратор. Вы согласовываете каждый ответ до запуска.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num" aria-hidden="true">2</div>
         <div class="step-body">
-          <h4>Проверяем ответы вместе с вами</h4>
+          <h3 class="h4style">Проверяем ответы вместе с вами</h3>
           <p>Прогоняем реальные вопросы ваших пациентов. Если ответ не устраивает — правим базу, не код. Запуск только после вашего «ок».</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num" aria-hidden="true">3</div>
         <div class="step-body">
-          <h4>Подключаем в Telegram — и включаем</h4>
+          <h3 class="h4style">Подключаем в Telegram — и включаем</h3>
           <p>Бот отвечает пациентам в вашем Telegram-аккаунте клиники. WhatsApp Business API — в планах.</p>
           <span class="step-note">WhatsApp — скоро</span>
         </div>
@@ -1021,42 +1013,42 @@ footer a:hover { color: var(--teal); }
         <div class="trust-row no">
           <div class="ti" aria-hidden="true">✕</div>
           <div>
-            <h5>Не ставит диагнозы</h5>
+            <h3 class="trust-h">Не ставит диагнозы</h3>
             <p>Ни один симптом не получает диагностической интерпретации</p>
           </div>
         </div>
         <div class="trust-row no">
           <div class="ti" aria-hidden="true">✕</div>
           <div>
-            <h5>Не назначает лечение</h5>
+            <h3 class="trust-h">Не назначает лечение</h3>
             <p>Никаких препаратов, процедур и дозировок в ответах</p>
           </div>
         </div>
         <div class="trust-row no">
           <div class="ti" aria-hidden="true">✕</div>
           <div>
-            <h5>Не интерпретирует анализы</h5>
+            <h3 class="trust-h">Не интерпретирует анализы</h3>
             <p>Результаты обследований — только с врачом на приёме</p>
           </div>
         </div>
         <div class="trust-row no">
           <div class="ti" aria-hidden="true">✕</div>
           <div>
-            <h5>Не даёт советов при жалобах</h5>
+            <h3 class="trust-h">Не даёт советов при жалобах</h3>
             <p>«Болит», «тревожит», «опухло» — мягко приглашает на очный приём</p>
           </div>
         </div>
         <div class="trust-row yes">
           <div class="ti" aria-hidden="true">✓</div>
           <div>
-            <h5>Только утверждённая вами база</h5>
+            <h3 class="trust-h">Только утверждённая вами база</h3>
             <p>Ответы — строго из документов, которые вы согласовали</p>
           </div>
         </div>
         <div class="trust-row yes">
           <div class="ti" aria-hidden="true">✓</div>
           <div>
-            <h5>Честный отказ при незнании</h5>
+            <h3 class="trust-h">Честный отказ при незнании</h3>
             <p>Нет данных в базе — бот говорит об этом прямо и зовёт администратора</p>
           </div>
         </div>
@@ -1075,17 +1067,17 @@ footer a:hover { color: var(--teal); }
     <div class="security-grid fade-up">
       <div class="sec-card">
         <div class="sec-icon">🔐</div>
-        <h4>Изолированная база</h4>
+        <h3 class="h4style">Изолированная база</h3>
         <p>Каждая клиника — отдельное хранилище. Перекрёстного доступа нет архитектурно.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">📋</div>
-        <h4>Источник ответа виден</h4>
+        <h3 class="h4style">Источник ответа виден</h3>
         <p>Каждый ответ содержит ссылку на раздел базы, из которого он взят.</p>
       </div>
       <div class="sec-card">
         <div class="sec-icon">🚫</div>
-        <h4>Мед-данные не собираются</h4>
+        <h3 class="h4style">Мед-данные не собираются</h3>
         <p>Бот не хранит историю болезни и результаты анализов в чате.</p>
       </div>
     </div>
@@ -1124,35 +1116,35 @@ footer a:hover { color: var(--teal); }
       <div class="conn-step">
         <div class="conn-num" aria-hidden="true">1</div>
         <div>
-          <h4>Знакомство</h4>
+          <h3 class="h4style">Знакомство</h3>
           <p>Коротко обсуждаем вашу клинику: размер, каналы общения с пациентами, типичные вопросы. Понимаем, подходит ли формат.</p>
         </div>
       </div>
       <div class="conn-step">
         <div class="conn-num" aria-hidden="true">2</div>
         <div>
-          <h4>Анкета клиники</h4>
+          <h3 class="h4style">Анкета клиники</h3>
           <p>Вы передаёте прайс, описания услуг, часы работы и правила. Мы оформляем в базу знаний и показываем вам каждый ответ до запуска.</p>
         </div>
       </div>
       <div class="conn-step">
         <div class="conn-num" aria-hidden="true">3</div>
         <div>
-          <h4>Настройка и совместная проверка</h4>
+          <h3 class="h4style">Настройка и совместная проверка</h3>
           <p>Прогоняем реальные вопросы ваших пациентов. Правим ответы вместе. Подключаем только после вашего согласования.</p>
         </div>
       </div>
       <div class="conn-step">
         <div class="conn-num" aria-hidden="true">4</div>
         <div>
-          <h4>Пилот — две недели</h4>
+          <h3 class="h4style">Пилот — две недели</h3>
           <p>Бот работает в реальных условиях вашей клиники. Отслеживаем ошибки, корректируем базу при необходимости.</p>
         </div>
       </div>
       <div class="conn-step">
         <div class="conn-num" aria-hidden="true">5</div>
         <div>
-          <h4>Решение о продолжении</h4>
+          <h3 class="h4style">Решение о продолжении</h3>
           <p>После пилота вы решаете, продолжать ли. Без давления и скрытых условий.</p>
         </div>
       </div>
@@ -1161,7 +1153,7 @@ footer a:hover { color: var(--teal); }
     <div class="price-block fade-up">
       <h3>Стоимость</h3>
       <p>Цену фиксируем до старта пилота — с учётом вашей клиники, каналов и объёма базы. Никаких скрытых доплат и модулей «по запросу».</p>
-      <a href="https://t.me/mskprod_sales_bot" class="btn-primary" target="_blank" rel="noopener">Обсудить стоимость в Telegram</a>
+      <a href="https://t.me/mskprod_sales_bot" class="btn-text-link" target="_blank" rel="noopener">Написать в Telegram →</a>
     </div>
   </section>
 
@@ -1172,7 +1164,7 @@ footer a:hover { color: var(--teal); }
     <div class="eyebrow">Частые вопросы</div>
     <h2 class="sec-heading fade-up">Что спрашивают руководители клиник</h2>
 
-    <div class="faq-list fade-up" role="list">
+    <div class="faq-list fade-up">
       <details>
         <summary>Что произойдёт, если бот не знает ответа?</summary>
         <div class="faq-ans">
@@ -1220,23 +1212,23 @@ footer a:hover { color: var(--teal); }
       <h2>Проверьте на вашей клинике</h2>
       <p>Для начала — короткое знакомство. Без обязательств, без заявки на сайте.</p>
       <div class="cta-btn-row">
-        <a href="https://t.me/mskprod_sales_bot" class="btn-primary" target="_blank" rel="noopener" aria-label="Написать в Telegram Саиду Магдиеву">Написать в Telegram</a>
+        <a href="https://t.me/mskprod_sales_bot" class="btn-primary" target="_blank" rel="noopener">Получить демонстрацию</a>
       </div>
       <div class="contact-row">
-        <div>Или позвоните напрямую: <a href="tel:+79332107006">+7&nbsp;933&nbsp;210-70-06</a> (Саид, основатель)</div>
-        <div>Telegram: <a href="https://t.me/mskprod_sales_bot" target="_blank" rel="noopener">@mskprod</a></div>
-        <div>Работаем удалённо по всей РФ · 09:00–21:00 МСК</div>
+        <div class="cta-contact">Или позвоните: <a href="tel:+79332107006">+7&nbsp;933&nbsp;210-70-06</a> (Саид, основатель)</div>
+        <div class="cta-contact">Telegram: <a href="https://t.me/mskprod_sales_bot" target="_blank" rel="noopener">@mskprod_sales_bot</a></div>
+        <div>Работаем удалённо по всей России · 09:00–21:00 МСК</div>
       </div>
     </div>
   </section>
 
-</div><!-- /page -->
+</main><!-- /page -->
 
 <footer>
   <div class="page">
     <p>MSK<span style="color:var(--teal)">·</span>PROD — AI-администратор для частных клиник</p>
     <p>Демо-клиника «Айдент» — вымышленная. Все данные в демо синтетические, использованы исключительно для иллюстрации работы системы.</p>
-    <p>Саид Магдиев · <a href="tel:+79332107006">+7 933 210-70-06</a> · <a href="https://t.me/mskprod_sales_bot" target="_blank" rel="noopener">@mskprod</a></p>
+    <p>Саид Магдиев · <a href="tel:+79332107006">+7 933 210-70-06</a> · <a href="https://t.me/mskprod_sales_bot" target="_blank" rel="noopener">@mskprod_sales_bot</a></p>
   </div>
 </footer>
 
